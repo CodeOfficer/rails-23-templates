@@ -85,20 +85,20 @@ END
 
 
 # PLUGINS ----------------------------------------------------------------------
-plugin 'rspec', :git => 'git://github.com/dchelimsky/rspec.git', :submodule => true
-plugin 'rspec-rails', :git => 'git://github.com/dchelimsky/rspec-rails.git', :submodule => true
-plugin 'state-machine', :git => 'git://github.com/pluginaweek/state_machine.git', :submodule => true
-
-
-# GEMS -------------------------------------------------------------------------
-gem "authlogic", :lib => 'authlogic', :source => 'http://gems.github.com'
-gem "rich-acts_as_revisable", :lib => "acts_as_revisable", :source => "http://gems.github.com"
-gem "mbleigh-acts-as-taggable-on", :source => "http://gems.github.com", :lib => "acts-as-taggable-on"
+# plugin 'rspec', :git => 'git://github.com/dchelimsky/rspec.git', :submodule => true
+# plugin 'rspec-rails', :git => 'git://github.com/dchelimsky/rspec-rails.git', :submodule => true
+# plugin 'state-machine', :git => 'git://github.com/pluginaweek/state_machine.git', :submodule => true
+# 
+# 
+# # GEMS -------------------------------------------------------------------------
+# gem "authlogic", :lib => 'authlogic', :source => 'http://gems.github.com'
+# gem "rich-acts_as_revisable", :lib => "acts_as_revisable", :source => "http://gems.github.com"
+# gem "mbleigh-acts-as-taggable-on", :source => "http://gems.github.com", :lib => "acts-as-taggable-on"
 
 
 
 git :init
-git :submodule => "init"
+# git :submodule => "init"
 
 
 
