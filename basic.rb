@@ -5,7 +5,7 @@ run "cp config/database.yml config/database.yml.example"
 
 # GITIGNORE --------------------------------------------------------------------
 file '.gitignore', 
-%q{coverage/*
+%q{
 log/*.log
 log/*.pid
 db/*.db
