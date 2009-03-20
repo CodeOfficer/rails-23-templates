@@ -82,6 +82,14 @@ rakefile "bootstrap.rake", <<-END
 END
 
 
+
+# sudo gem install rails --source http://gems.rubyonrails.org
+# sudo gem install dchelimsky-rspec
+# sudo gem install dchelimsky-rspec-rails
+# sudo gem install cucumber
+# sudo gem install webrat
+
+
 # PLUGINS ----------------------------------------------------------------------
 # plugin 'rspec', :git => 'git://github.com/dchelimsky/rspec.git', :submodule => true
 # plugin 'rspec-rails', :git => 'git://github.com/dchelimsky/rspec-rails.git', :submodule => true
