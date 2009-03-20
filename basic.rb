@@ -19,8 +19,6 @@ config/database.yml
 public/javascripts/all.js
 public/stylesheets/all.js
 }
-run "touch tmp/.gitignore log/.gitignore vendor/.gitignore"
-run %{find . -type d -empty | grep -v "vendor" | grep -v ".git" | grep -v "tmp" | xargs -I xxx touch xxx/.gitignore}
 
 
 # INSTALL JQUERY & UI ----------------------------------------------------------
@@ -111,7 +109,11 @@ git :init
 # rake('db:migrate')
 # 
 
+run "touch tmp/.gitignore log/.gitignore vendor/.gitignore"
+run %{find . -type d -empty | grep -v "vendor" | grep -v ".git" | grep -v "tmp" | xargs -I xxx touch xxx/.gitignore}
+
 git :add => "."
 git :commit => "-a -m 'Initial commit'"
 
 puts "SUCCESS!"
+
