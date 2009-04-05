@@ -33,8 +33,9 @@ $(function() {
 file "public/javascripts/jquery.js", open("http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js").read
 file "public/javascripts/jquery-ui.js", open("http://ajax.googleapis.com/ajax/libs/jqueryui/1.7/jquery-ui.min.js").read
 
+
 # INSTALL JQUERY TEMPLATES ----------------------------------------------------------
-file "public/javascripts/jquery.templates.js", open("http://github.com/wayneeseguin/jquery_templates/raw/jquery.templates.js").read
+file "public/javascripts/jquery.templates.js", open("http://github.com/wayneeseguin/jquery_templates/raw/master/jquery.templates.js").read
 
 
 # INSTALL STYLESHEET -----------------------------------------------------------
