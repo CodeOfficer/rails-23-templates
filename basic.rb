@@ -54,7 +54,7 @@ file 'app/views/layouts/application.html.erb', %q{
 	<%= javascript_include_tag 'jquery', 'jquery-ui', 'jquery.templates', 'application', :cache => true %>
 </head>
 <body>
-
+  <%= yield %>
 </body>
 </html>
 }
