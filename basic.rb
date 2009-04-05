@@ -41,6 +41,24 @@ file "public/javascripts/jquery.templates.js", open("http://github.com/wayneeseg
 # INSTALL STYLESHEET -----------------------------------------------------------
 file 'public/stylesheets/application.css', ''
 
+# INSTALL APP LAYOUT -----------------------------------------------------------
+file 'app/views/layouts/application.html.erb', %q{
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<title>Page Title</title>	
+	<%= stylesheet_link_tag 'application', :cache => true %>
+	<%= javascript_include_tag 'jquery', 'jquery-ui', 'application', :cache => true %>
+</head>
+<body>
+
+</body>
+</html>
+}
+
 
 # INSTALL CONFIG ---------------------------------------------------------------
 file 'config/config.yml', %q{
