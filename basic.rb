@@ -23,7 +23,11 @@ public/stylesheets/all.js
 
 # INSTALL JQUERY & UI ----------------------------------------------------------
 run "rm -f public/javascripts/*"
-file 'public/javascripts/application.js', ''
+file 'public/javascripts/application.js', %q{
+$(function() {
+	// Stuff to do as soon as the DOM is ready;
+});
+}
 require 'open-uri'
 file "public/javascripts/jquery.js", open("http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js").read
 file "public/javascripts/jquery-ui.js", open("http://ajax.googleapis.com/ajax/libs/jqueryui/1.7/jquery-ui.min.js").read
