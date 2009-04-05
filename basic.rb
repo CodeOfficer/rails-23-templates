@@ -1,3 +1,5 @@
+require 'open-uri'
+
 # BASIC ------------------------------------------------------------------------
 run "rm README"
 run "cp config/database.yml config/database.yml.example"
@@ -28,9 +30,11 @@ $(function() {
 	// Stuff to do as soon as the DOM is ready;
 });
 }
-require 'open-uri'
 file "public/javascripts/jquery.js", open("http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js").read
 file "public/javascripts/jquery-ui.js", open("http://ajax.googleapis.com/ajax/libs/jqueryui/1.7/jquery-ui.min.js").read
+
+# INSTALL JQUERY TEMPLATES ----------------------------------------------------------
+file "public/javascripts/jquery.templates.js", open("http://github.com/wayneeseguin/jquery_templates/raw/jquery.templates.js").read
 
 
 # INSTALL STYLESHEET -----------------------------------------------------------
@@ -109,8 +113,6 @@ END
 
 git :init
 # git :submodule => "init"
-
-
 
 # # route "map.resources :accounts"
 
