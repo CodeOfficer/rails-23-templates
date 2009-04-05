@@ -51,7 +51,7 @@ file 'app/views/layouts/application.html.erb', %q{
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
 	<title>Page Title</title>	
 	<%= stylesheet_link_tag 'application', :cache => true %>
-	<%= javascript_include_tag 'jquery', 'jquery-ui', 'application', :cache => true %>
+	<%= javascript_include_tag 'jquery', 'jquery-ui', 'jquery.templates', 'application', :cache => true %>
 </head>
 <body>
 
