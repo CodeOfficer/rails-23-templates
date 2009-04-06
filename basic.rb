@@ -34,7 +34,7 @@ run "rm -f public/javascripts/*"
 
 
 if yes?("Freeze rails gems ?")
-  rake("rails:template", "LOCATION=http://github.com/CodeOfficer/rails-templates/raw/master/jquery.rb")
+  rake("rails:template", "LOCATION=http://github.com/CodeOfficer/rails-23-templates/raw/master/jquery.rb")
 end
 
 # INSTALL STYLESHEET -----------------------------------------------------------
