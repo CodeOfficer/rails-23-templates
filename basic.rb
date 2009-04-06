@@ -83,7 +83,9 @@ END
 
 # ASSETS -----------------------------------------------------------------------
 
+jquery = false
 if yes?("\n INSTALL JQUERY AND FRIENDS?")
+  jquery = true
   rake("rails:template LOCATION=http://github.com/CodeOfficer/rails-23-templates/raw/master/jquery_and_friends.rb")
 end
 
@@ -94,7 +96,6 @@ end
 file 'public/stylesheets/application.css', %q{
 body { margin-left: auto; width: 960px; margin-right: auto; }
 }
-
 
 # APP LAYOUT -------------------------------------------------------------------
 
@@ -110,11 +111,10 @@ file 'app/views/layouts/application.html.erb', %q{
 	<%= javascript_include_tag 'jquery', 'jquery-ui', 'jquery.templates', 'application', :cache => true %>
 </head>
 <body>
-  <%= yield %>
+  <%= yield %> #{jquery}
 </body>
 </html>
 }
-
 
 # PLUGINS ----------------------------------------------------------------------
 
