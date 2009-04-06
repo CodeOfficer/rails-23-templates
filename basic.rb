@@ -1,13 +1,18 @@
 require 'open-uri'
+# http://github.com/CodeOfficer/rails-templates/raw/master/basic.rb
+
+git :init
 
 # BASIC ------------------------------------------------------------------------
+
 run "rm README"
 run "cp config/database.yml config/database.yml.example"
-
+run "rm public/index.html"
+run "rm -f public/javascripts/*"
 
 # GITIGNORE --------------------------------------------------------------------
-file '.gitignore', 
-%q{
+
+file '.gitignore', %q{
 log/*.log
 log/*.pid
 db/*.db
@@ -15,33 +20,38 @@ db/*.sqlite3
 db/schema.rb
 tmp/**/*
 .DS_Store
-doc/api
-doc/app
 config/database.yml
 public/javascripts/all.js
 public/stylesheets/all.js
 }
 
+# BASIC ------------------------------------------------------------------------
 
-# INSTALL JQUERY & UI ----------------------------------------------------------
+run "rm README"
+run "cp config/database.yml config/database.yml.example"
+run "rm public/index.html"
 run "rm -f public/javascripts/*"
-file 'public/javascripts/application.js', %q{
-$(function() {
-	// Stuff to do as soon as the DOM is ready;
-});
-}
-file "public/javascripts/jquery.js", open("http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js").read
-file "public/javascripts/jquery-ui.js", open("http://ajax.googleapis.com/ajax/libs/jqueryui/1.7/jquery-ui.min.js").read
 
 
-# INSTALL JQUERY TEMPLATES ----------------------------------------------------------
-file "public/javascripts/jquery.templates.js", open("http://github.com/wayneeseguin/jquery_templates/raw/master/jquery.templates.js").read
-
+if yes?("Freeze rails gems ?")
+  rake("rails:template", "LOCATION=http://github.com/CodeOfficer/rails-templates/raw/master/jquery.rb")
+end
 
 # INSTALL STYLESHEET -----------------------------------------------------------
+
 file 'public/stylesheets/application.css', ''
 
-# INSTALL APP LAYOUT -----------------------------------------------------------
+# INSTALL 960 CSS --------------------------------------------------------------
+
+file "public/stylesheets/960/reset.css", 
+  open("http://github.com/CodeOfficer/960-grid-system-without-margins/raw/master/code/css/reset.css").read
+file "public/stylesheets/960/960.css", 
+  open("http://github.com/CodeOfficer/960-grid-system-without-margins/raw/master/code/css/960.css").read
+file "public/stylesheets/960/text.css", 
+  open("http://github.com/CodeOfficer/960-grid-system-without-margins/raw/master/code/css/text.css").read
+
+# APP LAYOUT -------------------------------------------------------------------
+
 file 'app/views/layouts/application.html.erb', %q{
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -50,7 +60,7 @@ file 'app/views/layouts/application.html.erb', %q{
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
 	<title>Page Title</title>	
-	<%= stylesheet_link_tag 'application', :cache => true %>
+	<%= stylesheet_link_tag '960/reset', '960/960', '960/text', 'application', :cache => true %>
 	<%= javascript_include_tag 'jquery', 'jquery-ui', 'jquery.templates', 'application', :cache => true %>
 </head>
 <body>
@@ -59,14 +69,14 @@ file 'app/views/layouts/application.html.erb', %q{
 </html>
 }
 
+# APP CONFIG -------------------------------------------------------------------
 
-# INSTALL CONFIG ---------------------------------------------------------------
 file 'config/config.yml', %q{
 CONFIG = YAML.load_file("#{RAILS_ROOT}/config/config.yml")[RAILS_ENV]
 }
 file 'config/config.yml', %q{
 defaults: &defaults
-  per_page: 15
+  test_var: default
   
 development:
   test_var: development
@@ -81,8 +91,13 @@ production:
   <<: *defaults
 }
 
+# INITIALIZERS -----------------------------------------------------------------
 
-# DATE & TIME FORMATS ----------------------------------------------------------
+initializer 'session_store.rb', <<-END
+ActionController::Base.session = { :session_key => '_#{(1..6).map { |x| (65 + rand(26)).chr }.join}_session', :secret => '#{(1..40).map { |x| (65 + rand(26)).chr }.join}' }
+ActionController::Base.session_store = :active_record_store
+END
+
 initializer 'date_time_formats.rb', <<-END
 my_time_formats = {
   :human => '%b %d, %Y @ %l:%M %p',
@@ -98,39 +113,64 @@ END
 
 
 # MISCELLANEOUS ----------------------------------------------------------------
+
 rakefile "bootstrap.rake", <<-END
-  namespace :app do
-    task :bootstrap do
-    end
-    
-    task :seed do
-    end
+namespace :app do
+  task :bootstrap do
   end
+  
+  task :seed do
+  end
+end
 END
 
-
-
-# sudo gem install rails --source http://gems.rubyonrails.org
-# sudo gem install dchelimsky-rspec
-# sudo gem install dchelimsky-rspec-rails
-# sudo gem install cucumber
-# sudo gem install webrat
-
-
 # PLUGINS ----------------------------------------------------------------------
-# plugin 'rspec', :git => 'git://github.com/dchelimsky/rspec.git', :submodule => true
-# plugin 'rspec-rails', :git => 'git://github.com/dchelimsky/rspec-rails.git', :submodule => true
-# plugin 'state-machine', :git => 'git://github.com/pluginaweek/state_machine.git', :submodule => true
-# 
-# 
-# # GEMS -------------------------------------------------------------------------
-# gem "authlogic", :lib => 'authlogic', :source => 'http://gems.github.com'
-# gem "rich-acts_as_revisable", :lib => "acts_as_revisable", :source => "http://gems.github.com"
-# gem "mbleigh-acts-as-taggable-on", :source => "http://gems.github.com", :lib => "acts-as-taggable-on"
 
+  # for testing
+  plugin 'rspec',             :git => 'git://github.com/dchelimsky/rspec.git'
+  plugin 'rspec-rails',       :git => 'git://github.com/dchelimsky/rspec-rails.git'
+  plugin 'cucumber',          :git => "git://github.com/aslakhellesoy/cucumber.git"
+  plugin 'factory_girl',      :git => "git://github.com/thoughtbot/factory_girl.git"
+  # for file uploads
+  plugin 'paperclip',         :git => "git://github.com/thoughtbot/paperclip.git"
+  # misc
+  plugin 'state-machine',     :git => 'git://github.com/pluginaweek/state_machine.git'
+  plugin 'hoptoad_notifier',  :git => "git://github.com/thoughtbot/hoptoad_notifier.git" 
+  plugin 'haml',              :git => "git://github.com/nex3/haml.git" 
 
+# GEMS -------------------------------------------------------------------------
 
-git :init
+  # sudo gem install rails --source http://gems.rubyonrails.org
+  # sudo gem install dchelimsky-rspec
+  # sudo gem install dchelimsky-rspec-rails
+  # sudo gem install cucumber
+  # sudo gem install webrat
+
+  gem "authlogic", 
+    :lib => 'authlogic', 
+    :source => 'http://gems.github.com'
+
+  gem 'mislav-will_paginate', 
+    :lib => 'will_paginate',  
+    :source => 'http://gems.github.com'  
+
+  gem "mbleigh-acts-as-taggable-on", 
+    :lib => "acts-as-taggable-on",
+    :source => "http://gems.github.com"
+    
+# COMMANDS ---------------------------------------------------------------------
+  
+rake("gems:install", :sudo => true)
+
+generate("rspec")
+
+route "map.root :controller => 'home'"
+generate("controller", "home index")
+
+# route "map.resources :accounts"
+# route "map.root :controller => 'facebook'"
+
+# git :init
 # git :submodule => "init"
 
 # # route "map.resources :accounts"
@@ -146,7 +186,7 @@ run "touch tmp/.gitignore log/.gitignore vendor/.gitignore"
 run %{find . -type d -empty | grep -v "vendor" | grep -v ".git" | grep -v "tmp" | xargs -I xxx touch xxx/.gitignore}
 
 git :add => "."
-git :commit => "-a -m 'Initial commit'"
+git :commit => " -m 'Initial commit'"
 
 puts "SUCCESS!"
 
