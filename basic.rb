@@ -83,13 +83,17 @@ END
 
 # ASSETS -----------------------------------------------------------------------
 
-if yes?("Install Jquery And Friends?")
+if yes?("\n INSTALL JQUERY AND FRIENDS?")
   rake("rails:template LOCATION=http://github.com/CodeOfficer/rails-23-templates/raw/master/jquery_and_friends.rb")
 end
 
-if yes?("Install 960 CSS?")
-  rake("rails:template LOCATION=http://github.com/CodeOfficer/rails-23-templates/raw/master/960_css.rb")
+if yes?("\n INSTALL 960 CSS FRAMEWORK?")
+  rake("rails:template LOCATION=http://github.com/CodeOfficer/rails-23-templates/raw/master/960_css_framework.rb")
 end
+
+file 'public/stylesheets/application.css', %q{
+body { margin-left: auto; width: 960px; margin-right: auto; }
+}
 
 
 # APP LAYOUT -------------------------------------------------------------------
