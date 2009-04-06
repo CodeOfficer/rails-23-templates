@@ -1,10 +1,15 @@
+require 'open-uri'
+
 # INSTALL JQUERY & UI ----------------------------------------------------------
 
-run "rm -f public/javascripts/*"
+run "rm -f public/javascripts/prototype.js"
+run "rm -f public/javascripts/control.js"
+run "rm -f public/javascripts/dragdrop.js"
+run "rm -f public/javascripts/effects.js"
 
 file 'public/javascripts/application.js', %q{
 $(function() {
-	// Stuff to do as soon as the DOM is ready;
+	// play that funky music white boy ...
 });
 }
 

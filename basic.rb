@@ -1,14 +1,16 @@
-require 'open-uri'
 # http://github.com/CodeOfficer/rails-templates/raw/master/basic.rb
 
 git :init
 
-# BASIC ------------------------------------------------------------------------
+# COMMON -----------------------------------------------------------------------
 
 run "rm README"
 run "cp config/database.yml config/database.yml.example"
 run "rm public/index.html"
 run "rm -f public/javascripts/*"
+
+file 'public/stylesheets/application.js', ''
+file 'public/stylesheets/application.css', ''
 
 # GITIGNORE --------------------------------------------------------------------
 
@@ -23,50 +25,6 @@ tmp/**/*
 config/database.yml
 public/javascripts/all.js
 public/stylesheets/all.js
-}
-
-# BASIC ------------------------------------------------------------------------
-
-run "rm README"
-run "cp config/database.yml config/database.yml.example"
-run "rm public/index.html"
-run "rm -f public/javascripts/*"
-
-
-if yes?("Freeze rails gems ?")
-  rake("rails:template LOCATION=http://github.com/CodeOfficer/rails-23-templates/raw/master/jquery.rb")
-end
-
-# INSTALL STYLESHEET -----------------------------------------------------------
-
-file 'public/stylesheets/application.css', ''
-
-# INSTALL 960 CSS --------------------------------------------------------------
-
-file "public/stylesheets/960/reset.css", 
-  open("http://github.com/CodeOfficer/960-grid-system-without-margins/raw/master/code/css/reset.css").read
-file "public/stylesheets/960/960.css", 
-  open("http://github.com/CodeOfficer/960-grid-system-without-margins/raw/master/code/css/960.css").read
-file "public/stylesheets/960/text.css", 
-  open("http://github.com/CodeOfficer/960-grid-system-without-margins/raw/master/code/css/text.css").read
-
-# APP LAYOUT -------------------------------------------------------------------
-
-file 'app/views/layouts/application.html.erb', %q{
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-	<title>Page Title</title>	
-	<%= stylesheet_link_tag '960/reset', '960/960', '960/text', 'application', :cache => true %>
-	<%= javascript_include_tag 'jquery', 'jquery-ui', 'jquery.templates', 'application', :cache => true %>
-</head>
-<body>
-  <%= yield %>
-</body>
-</html>
 }
 
 # APP CONFIG -------------------------------------------------------------------
@@ -111,7 +69,6 @@ ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(my_time_fo
 ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(my_date_formats)
 END
 
-
 # MISCELLANEOUS ----------------------------------------------------------------
 
 rakefile "bootstrap.rake", <<-END
@@ -124,16 +81,44 @@ namespace :app do
 end
 END
 
+# ASSETS -----------------------------------------------------------------------
+
+if yes?("Install Jquery And Friends?")
+  rake("rails:template LOCATION=http://github.com/CodeOfficer/rails-23-templates/raw/master/jquery_and_friends.rb")
+end
+
+if yes?("Install 960 CSS?")
+  rake("rails:template LOCATION=http://github.com/CodeOfficer/rails-23-templates/raw/master/960_css.rb")
+end
+
+
+# APP LAYOUT -------------------------------------------------------------------
+
+file 'app/views/layouts/application.html.erb', %q{
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<title>Page Title</title>	
+	<%= stylesheet_link_tag '960/reset', '960/960', '960/text', 'application', :cache => true %>
+	<%= javascript_include_tag 'jquery', 'jquery-ui', 'jquery.templates', 'application', :cache => true %>
+</head>
+<body>
+  <%= yield %>
+</body>
+</html>
+}
+
+
 # PLUGINS ----------------------------------------------------------------------
 
-  # for testing
   plugin 'rspec',             :git => 'git://github.com/dchelimsky/rspec.git'
   plugin 'rspec-rails',       :git => 'git://github.com/dchelimsky/rspec-rails.git'
   plugin 'cucumber',          :git => "git://github.com/aslakhellesoy/cucumber.git"
   plugin 'factory_girl',      :git => "git://github.com/thoughtbot/factory_girl.git"
-  # for file uploads
   plugin 'paperclip',         :git => "git://github.com/thoughtbot/paperclip.git"
-  # misc
   plugin 'state-machine',     :git => 'git://github.com/pluginaweek/state_machine.git'
   plugin 'hoptoad_notifier',  :git => "git://github.com/thoughtbot/hoptoad_notifier.git" 
   plugin 'haml',              :git => "git://github.com/nex3/haml.git" 
@@ -164,23 +149,14 @@ rake("gems:install", :sudo => true)
 
 generate("rspec")
 
-route "map.root :controller => 'home'"
 generate("controller", "home index")
+route("map.root :controller => 'home'")
 
 # route "map.resources :accounts"
-# route "map.root :controller => 'facebook'"
 
-# git :init
-# git :submodule => "init"
-
-# # route "map.resources :accounts"
-
-# 
-# generate("rspec")
 # rake('db:sessions:create')
 # generate("authlogic", "user session")
 # rake('db:migrate')
-# 
 
 run "touch tmp/.gitignore log/.gitignore vendor/.gitignore"
 run %{find . -type d -empty | grep -v "vendor" | grep -v ".git" | grep -v "tmp" | xargs -I xxx touch xxx/.gitignore}
