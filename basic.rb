@@ -99,7 +99,7 @@ body { margin-left: auto; width: 960px; margin-right: auto; }
 
 # APP LAYOUT -------------------------------------------------------------------
 
-file 'app/views/layouts/application.html.erb', %q{
+file 'app/views/layouts/application.html.erb', <<-END
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -114,7 +114,7 @@ file 'app/views/layouts/application.html.erb', %q{
   <%= yield %> #{jquery}
 </body>
 </html>
-}
+END
 
 # PLUGINS ----------------------------------------------------------------------
 
