@@ -83,26 +83,19 @@ END
 
 # ASSETS -----------------------------------------------------------------------
 
-jquery = false
-if yes?("\n INSTALL JQUERY AND FRIENDS?")
-  jquery = true
+if yes?("\n >> INSTALL JQUERY AND FRIENDS?")
   rake("rails:template LOCATION=http://github.com/CodeOfficer/rails-23-templates/raw/master/jquery_and_friends.rb")
 end
 
-if yes?("\n INSTALL 960 CSS FRAMEWORK?")
+if yes?("\n >> INSTALL 960 CSS FRAMEWORK?")
   rake("rails:template LOCATION=http://github.com/CodeOfficer/rails-23-templates/raw/master/960_css_framework.rb")
 end
-
-file 'public/stylesheets/application.css', %q{
-body { margin-left: auto; width: 960px; margin-right: auto; }
-}
 
 # APP LAYOUT -------------------------------------------------------------------
 
 file 'app/views/layouts/application.html.erb', <<END
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
@@ -111,7 +104,7 @@ file 'app/views/layouts/application.html.erb', <<END
 	<%= javascript_include_tag 'jquery', 'jquery-ui', 'jquery.templates', 'application', :cache => true %>
 </head>
 <body>
-  <%= yield %> #{jquery}
+  <%= yield %>
 </body>
 </html>
 END

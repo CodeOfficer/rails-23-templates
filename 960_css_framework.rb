@@ -11,6 +11,6 @@ file "public/stylesheets/960/text.css",
   
 # APPLICATION.CSS --------------------------------------------------------------
 
-# file 'public/stylesheets/application.css', %q{
-# body { margin-left: auto; width: 960px; margin-right: auto; }
-# }
+file 'public/stylesheets/application.css', %q{
+body { margin-left: auto; width: 960px; margin-right: auto; }
+}
