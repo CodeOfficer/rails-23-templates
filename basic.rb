@@ -97,7 +97,7 @@ plugin 'default_value_for', :git => "git://github.com/FooBarWidget/default_value
 # COMMANDS ---------------------------------------------------------------------
   
 # rake("gems:install", :sudo => true) if yes?("Install gems ?")
-rake("gem bundle") if yes?("Bundle gems ?")
+run("gem bundle") if yes?("Bundle gems ?")
 
 generate("nifty_config")
 generate("nifty_layout")
