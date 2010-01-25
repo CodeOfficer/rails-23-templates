@@ -91,6 +91,8 @@ route("map.root :controller => 'home'")
 run "touch tmp/.gitignore log/.gitignore vendor/.gitignore"
 run %{find . -type d -empty | grep -v "vendor" | grep -v ".git" | grep -v "tmp" | xargs -I xxx touch xxx/.gitignore}
 
+rake("db:create:all")
+
 # CUSTOMIZATIONS ---------------------------------------------------------------
 
 file 'config/app_config.yml', %q{
