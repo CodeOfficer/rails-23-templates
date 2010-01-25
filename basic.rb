@@ -80,7 +80,7 @@ append_file 'Gemfile', <<-END
 gem "haml"
 
 only :development do
-  gem "nifty_generators"
+  gem "nifty-generators"
 end
 
 only :test do
