@@ -76,6 +76,7 @@ END
 rake("rails:template LOCATION=http://github.com/tomafro/dotfiles/raw/master/resources/rails/bundler.rb")
 
 append_file 'Gemfile', <<-END
+
 gem "haml"
 only :test do
   gem "rspec"
@@ -83,6 +84,7 @@ only :test do
   gem "cucumber"
   gem "factory_girl"
 end
+
 END
 
 plugin 'default_value_for', :git => "git://github.com/FooBarWidget/default_value_for.git"
