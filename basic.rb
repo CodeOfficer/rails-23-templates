@@ -48,6 +48,7 @@ ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(my_date_fo
 END
 
 # BUNDLER ----------------------------------------------------------------------
+# http://tomafro.net/2009/11/a-rails-template-for-gem-bundler
 
 rake("rails:template LOCATION=http://github.com/CodeOfficer/bin/raw/master/resources/bundler.rb")
 
@@ -80,7 +81,7 @@ plugin 'default_value_for', :git => "git://github.com/FooBarWidget/default_value
 # run("gem bundle") if yes?("Bundle gems ?")
 
 generate("nifty_config")
-generate("nifty_layout", "--haml")
+generate("nifty_layout")
 generate("nifty_authentication")
 generate("rspec")
 generate("cucumber", "--rspec", "--webrat")
