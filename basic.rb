@@ -49,7 +49,7 @@ END
 
 # BUNDLER ----------------------------------------------------------------------
 
-rake("rails:template LOCATION=http://github.com/tomafro/dotfiles/raw/master/resources/rails/bundler.rb")
+rake("rails:template LOCATION=http://github.com/CodeOfficer/bin/raw/master/resources/bundler.rb")
 
 append_file 'Gemfile', <<-END
 
