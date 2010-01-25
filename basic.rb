@@ -71,7 +71,7 @@ ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(my_time_fo
 ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(my_date_formats)
 END
 
-# GEMS & PLUGINS ---------------------------------------------------------------
+# BUNDLER ----------------------------------------------------------------------
 
 rake("rails:template LOCATION=http://github.com/tomafro/dotfiles/raw/master/resources/rails/bundler.rb")
 
@@ -92,12 +92,16 @@ end
 
 END
 
+run("gem bundle")
+
+# PLUGINS ----------------------------------------------------------------------
+
 plugin 'default_value_for', :git => "git://github.com/FooBarWidget/default_value_for.git"
     
 # COMMANDS ---------------------------------------------------------------------
   
 # rake("gems:install", :sudo => true) if yes?("Install gems ?")
-run("gem bundle") if yes?("Bundle gems ?")
+# run("gem bundle") if yes?("Bundle gems ?")
 
 generate("nifty_config")
 generate("nifty_layout")
