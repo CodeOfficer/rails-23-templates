@@ -55,17 +55,22 @@ rake("rails:template LOCATION=http://github.com/CodeOfficer/bin/raw/master/resou
 append_file 'Gemfile', <<-END
 
 gem "haml"
+gem "nifty-generators"
+gem "rspec"
+gem "rspec-rails"
+gem "cucumber"
+gem "factory_girl"
 
-only :development do
-  gem "nifty-generators"
-end
-
-only :test do
-  gem "rspec"
-  gem "rspec-rails"
-  gem "cucumber"
-  gem "factory_girl"
-end
+# only :development do
+#   gem "nifty-generators"
+# end
+# 
+# only :test do
+#   gem "rspec"
+#   gem "rspec-rails"
+#   gem "cucumber"
+#   gem "factory_girl"
+# end
 
 END
 
@@ -82,7 +87,6 @@ plugin 'default_value_for', :git => "git://github.com/FooBarWidget/default_value
 
 generate("nifty_config")
 generate("nifty_layout")
-generate("nifty_authentication")
 generate("rspec")
 generate("cucumber", "--rspec", "--webrat")
 generate("controller", "home index")
