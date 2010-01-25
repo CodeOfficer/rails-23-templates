@@ -78,6 +78,11 @@ rake("rails:template LOCATION=http://github.com/tomafro/dotfiles/raw/master/reso
 append_file 'Gemfile', <<-END
 
 gem "haml"
+
+only :development do
+  gem "nifty_generators"
+end
+
 only :test do
   gem "rspec"
   gem "rspec-rails"
